@@ -1,25 +1,35 @@
 <template>
   <div class="hello">
-    
+    <h2> Dodaj Zivotinju </h2>
+    <form method="POST" @submit.prevent="addAnimal"> 
+      <input v-model="ime" placeholder="unesi ime">
+      <input v-model="vrsta" placeholder="unesi vrstu">
+      <input v-model="datumRodjenja" type="date" >
+      <button>Add Animal</button>
+    </form>
+
+
     <p>Lista Zivotinja:</p>
-  <div class="table">
+
     <table>
       <tr> 
         <td>Vrsta</td>
         <td>Ime</td>
         <td>Datum</td>
         <td>Brisanje zivotinje</td>
+        <td>Move</td>
       </tr>
       <tr v-for="(animal,index) in animals" :key="index">
         <td>{{ animal.vrsta }}</td>
-        <td>{{ animal.name }}</td>
+        <td>{{ animal.ime }}</td>
         <td v-if="animal.datumRodjenja">{{ animal.datumRodjenja }}</td>
         <td v-else> Nepoznato </td>
-        <td><button @click="izbrisatiZivotinju">Remove</button></td>
+        <td><button @click="izbrisatiZivotinju(index)">Remove</button></td>
+        <td><button @click="moveToTop(index, animal)">Move To Top</button></td>
 
       </tr>
     </table>
-</div>
+
   </div>
 </template>
 
@@ -30,12 +40,16 @@ export default {
   return {
   
   animals: [
-        { vrsta: "Pas", name: "Mica", datumRodjenja: new Date().toLocaleString() },
-        { vrsta: "Medved", name: "Balu", datumRodjenja: new Date().toLocaleString() },
-        { vrsta: "Oro", name: "Mimi"},
-        { vrsta: "Delfin", name: "Pero", datumRodjenja: new Date().toLocaleString() },
-        { vrsta: "Macka", name: "Cile " }
+        { vrsta: "Pas", ime: "Mica", datumRodjenja: new Date().toLocaleString() },
+        { vrsta: "Medved", ime: "Balu", datumRodjenja: new Date().toLocaleString() },
+        { vrsta: "Oro", ime: "Mimi", datumRodjenja: new Date().toLocaleString()},
+        { vrsta: "Delfin", ime: "Pero", datumRodjenja: new Date().toLocaleString() },
+        { vrsta: "Macka", ime: "Cile " }
   ],
+  vrsta: '',
+  ime: '',
+  datumRodjenja: null,
+  
 
   }
 
@@ -43,10 +57,25 @@ export default {
 
   methods: {
     izbrisatiZivotinju(index) {
-        this.animals.splice(index, 1)
-    }
+        this.animals.splice(index, 1);
+    },
 
-  
+    moveToTop(index, animal) {
+      this.izbrisatiZivotinju(index);
+      this.animals.unshift(animal);
+    },
+
+    addAnimal() {
+      var newAnimal = {
+        ime: this.ime,
+        vrsta: this.vrsta,
+        datumRodjenja: this.datumRodjenja,
+      }
+      this.animals.push(newAnimal);
+      this.ime ='';
+      this.vrsta= '';
+      this.datumRodjenja= null;
+    }
   }
 
 }
@@ -95,5 +124,13 @@ button {
   border-radius: 5px;
   background-color: red;
   color: white;
+  width: 200px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+form input {
+  width: 200px;
 }
 </style>
