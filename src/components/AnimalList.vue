@@ -12,7 +12,10 @@
       <tr v-for="(animal,index) in animals" :key="index">
         <td>{{ animal.vrsta }}</td>
         <td>{{ animal.name }}</td>
-        <td>{{ animal.datumRodjenja }}</td>
+        <td v-if="animal.datumRodjenja">{{ animal.datumRodjenja }}</td>
+        <td v-else> Nepoznato </td>
+  
+
       </tr>
     </table>
 </div>
@@ -28,12 +31,12 @@ export default {
   animals: [
         { vrsta: "Pas", name: "Mica", datumRodjenja: new Date().toLocaleString() },
         { vrsta: "Medved", name: "Balu", datumRodjenja: new Date().toLocaleString() },
-        { vrsta: "Oro", name: "Mimi", datumRodjenja: new Date().toLocaleString() },
+        { vrsta: "Oro", name: "Mimi"},
         { vrsta: "Delfin", name: "Pero", datumRodjenja: new Date().toLocaleString() },
-        { vrsta: "Macka", name: "Cile ", datumRodjenja: new Date().toLocaleString() }
+        { vrsta: "Macka", name: "Cile " }
   ],
 
-  
+
   }
   }  
 
