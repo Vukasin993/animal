@@ -8,13 +8,14 @@
         <td>Vrsta</td>
         <td>Ime</td>
         <td>Datum</td>
+        <td>Brisanje zivotinje</td>
       </tr>
       <tr v-for="(animal,index) in animals" :key="index">
         <td>{{ animal.vrsta }}</td>
         <td>{{ animal.name }}</td>
         <td v-if="animal.datumRodjenja">{{ animal.datumRodjenja }}</td>
         <td v-else> Nepoznato </td>
-  
+        <td><button @click="izbrisatiZivotinju">Remove</button></td>
 
       </tr>
     </table>
@@ -36,10 +37,17 @@ export default {
         { vrsta: "Macka", name: "Cile " }
   ],
 
-
   }
-  }  
 
+  },
+
+  methods: {
+    izbrisatiZivotinju(index) {
+        this.animals.splice(index, 1)
+    }
+
+  
+  }
 
 }
 </script>
@@ -80,5 +88,12 @@ td {
 
 tr:hover {background-color: green;
   cursor: pointer;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
 }
 </style>
